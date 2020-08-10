@@ -61,6 +61,10 @@ ggplot(data = mpg) +
 
 # 카테고리 변수별 연속형 변수의 요약 통계량을 막대 그래프.
 # drv(구동 방식)별 hwy(고속도로 연비)의 평균
+# drv: 카테고리 변수, hwy: 연속형 변수
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = drv, y = hwy))
+
 mpg_by_drv <- mpg %>% 
   group_by(drv) %>% 
   summarise(avg = mean(hwy))
@@ -81,3 +85,29 @@ mpg_by_class
 
 ggplot(data = mpg_by_class) +
   geom_col(mapping = aes(x = class, y = mean_hwy))
+
+# 히스토그램(histogram): 
+# 연속형 변수를 최솟값부터 최댓값까지의 구간을 나눠서
+# 그 구간에 속한 관측치(observations)의 개수를 막대로 나타낸 그래프.
+# bins = 막대 개수, binwidth = 막개 가로 길이.
+
+# hwy의 히스토그램
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy), binwidth = 3)
+
+# 상자 그림(box plot)
+# 변수의 분포.
+# 그룹 간의 변수의 분포.
+# 기술 통계량(최솟값, 최댓값, 백분위값)들을 표현한 그래프.
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(y = hwy))
+
+summary(mpg$hwy)
+
+ggplot(data = mpg) +
+  geom_boxplot(mapping = aes(x = drv, y = hwy))
+
+summary(filter(mpg, drv == '4')$hwy)
+summary(filter(mpg, drv == 'f')$hwy)
+summary(filter(mpg, drv == 'r')$hwy)
